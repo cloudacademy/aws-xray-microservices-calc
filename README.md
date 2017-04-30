@@ -23,17 +23,14 @@ A `docker-compose.yml` file has been provided to orchestrate the provisioning of
 ## Prerequisites
 
 You will need to have a Docker runtime installed locally. This project uses both `docker` and `docker-compose` utilities. There are generally 2 approaches to installing a workstation Docker runtime:
-* Download and install Docker Toolbox from: `https://www.docker.com/products/docker-toolbox`
-or
+* Download and install Docker Toolbox from: `https://www.docker.com/products/docker-toolbox`, or
 * Install and configure Vagrant - then download and setup using CoreOS box located at: `https://github.com/coreos/coreos-vagrant`
 
 This project has been successfully tested on:
 
 1. Docker Community Edition 17.03.1-ce-mac5 running on macOS Sierra 10.12.4
-    1 . `docker --version`
-        `Docker version 17.03.1-ce, build c6d412e`
-    2. `docker-compose --version`
-       `docker-compose version 1.11.2, build dfed245`
+* `docker --version` -> `Docker version 17.03.1-ce, build c6d412e`
+* `docker-compose --version` -> `docker-compose version 1.11.2, build dfed245`
 
 ## Installation
 
