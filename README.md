@@ -23,8 +23,9 @@ A `docker-compose.yml` file has been provided to orchestrate the provisioning of
 ## Prerequisites
 
 You will need to have a Docker runtime installed locally. This project uses both `docker` and `docker-compose` utilities. There are generally 2 approaches to installing a workstation Docker runtime:
-1. Download and install Docker Toolbox from: `https://www.docker.com/products/docker-toolbox`
-2. Install and configure Vagrant - then download and setup using CoreOS box located at: `https://github.com/coreos/coreos-vagrant`
+* Download and install Docker Toolbox from: `https://www.docker.com/products/docker-toolbox`
+or
+* Install and configure Vagrant - then download and setup using CoreOS box located at: `https://github.com/coreos/coreos-vagrant`
 
 This project has been successfully tested on:
 
