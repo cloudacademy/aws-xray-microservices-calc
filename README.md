@@ -13,7 +13,7 @@ These instructions are for OSX. Your mileage may vary on Windows and other \*nix
     1. `AWSXrayWriteOnlyAccess`
     2. `AmazonSQSFullAccess`
     
-![Alt text](documentation/IAMPolicies.png?raw=true&width=100 "IAM Policies")
+![Alt text](documentation/IAMPolicies.png?raw=true "IAM Policies" | width=100)
 
 Notes: 
 AWSXrayWriteOnlyAccess
