@@ -1,6 +1,6 @@
 # AWS X-Ray Microservices Calculator
 
-![Alt text](documentation/XRayDockerArch.png?raw=true "Title")
+![Alt text](documentation/XRayDockerArch.png?raw=true "AWS X-Ray Microservices Calculator")
 
 Dockerised Microservices Calculator - demonstrating AWS X-Ray instrumentation and telemetry
 
@@ -8,14 +8,14 @@ Dockerised Microservices Calculator - demonstrating AWS X-Ray instrumentation an
 
 These instructions are for OSX. Your mileage may vary on Windows and other \*nix.
 
-1. Create new IAM credential for the XRAY and SQS accesses. Ensure that credential has API programmatic access - this will provision an ACCESS_KEY and SECRET_ACCESS_KEY which we will add into the `.env` file
+1. Create new IAM credential for the XRAY and SQS accesses. Ensure that the credential has API programmatic access - this will provision an ACCESS_KEY and SECRET_ACCESS_KEY which we will add into the `.env` file (step 3 below).
 2. Attach IAM policies:
-    AWSXrayWriteOnlyAccess
-    AmazonSQSFullAccess
+    1. `AWSXrayWriteOnlyAccess`
+    2. `AmazonSQSFullAccess`
     
-![Alt text](documentation/IAMPolicies.png?raw=true "Title")
+![Alt text](documentation/IAMPolicies.png?raw=true "IAM Policies")
 
-Note: 
+Notes: 
 AWSXrayWriteOnlyAccess
 ```javascript
 {
@@ -51,8 +51,6 @@ AmazonSQSFullAccess
 }
 ```
 
-![Alt text](documentation/XRayDockerArch.png?raw=true "Title")
-
 3. Create a `.env` file in the project root directory. Add the following enviroment variables:
 ```javascript
 AWS_ACCESS_KEY_ID=<your access key here>
@@ -72,12 +70,20 @@ TIMEZONE=Pacific/Auckland
 CALC_SQS_QUEUE=https://sqs.ap-southeast-2.amazonaws.com/123456789012/calclog-sydJeremys-MacBook:xray-calc
 ```
 
-4. Run docker-compose build
-5. Run docker-compose up
+4. Run `docker-compose build`
+5. Run `docker-compose up`
 6. Fire a test calculation at it:
 
 `curl --data-urlencode "calcid=testid123" --data-urlencode "expression=(2*(9+22/5)-((9-1)/4)^2)+(3^2+((5*5-1)/2)" http://localhost:8080/api/calc'`
 
-7. Examine the result - the answer should be 43.8
+7. Examine the result - the answer should be `43.8`
 
-8. Login into the AWS X-Ray console and examine the Service Map 
+8. Login into the AWS X-Ray console and examine the Service Map:
+
+![Alt text](documentation/ServiceMap.png?raw=true "Amazon X-Ray Console Service Map")
+
+9. Perform a filtered trace and examine response codes:
+
+![Alt text](documentation/Trace1.png?raw=true "Amazon X-Ray Console Trace - filtered search")
+
+![Alt text](documentation/Trace2.png?raw=true "Amazon X-Ray Console Trace - examine response codes")
