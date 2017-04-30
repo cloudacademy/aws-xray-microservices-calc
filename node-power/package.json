@@ -1,0 +1,10 @@
+{
+  "name": "node-api",
+  "main": "server.js",
+  "dependencies": {
+    "aws-sdk": "^2.45.0",    
+    "aws-xray-sdk": "^1.0.6-beta",
+    "body-parser": "~1.0.1",
+    "express": "~4.0.0"
+  }
+}

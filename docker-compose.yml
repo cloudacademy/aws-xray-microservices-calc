@@ -1,0 +1,147 @@
+version: "3"
+services:
+  xray:
+    build:
+      context: ./xray
+      dockerfile: ./Dockerfile
+      args:
+        - TIMEZONE=${TIMEZONE}    
+    container_name: XRAY
+    image: xray-daemon
+    command: --local-mode
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+    ports:
+      - "2000:2000/udp"
+    networks:
+      calcnet:
+        ipv4_address: 172.19.20.1
+
+  calc:
+    build:
+      context: ./node-calc
+      dockerfile: ./Dockerfile
+    container_name: CALC
+    image: node-calc
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      CALC_SQS_QUEUE: ${CALC_SQS_QUEUE}    
+    ports:
+      - "8080:8080"
+    networks:
+      calcnet:
+        ipv4_address: 172.19.0.100
+
+  postfix:
+    build:
+      context: ./node-postfix
+      dockerfile: ./Dockerfile
+    container_name: POSTIX
+    image: node-postfix
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      CALC_SQS_QUEUE: ${CALC_SQS_QUEUE}
+    ports:
+      - "9090:9090"  
+    networks:
+      calcnet:
+        ipv4_address: 172.19.0.200
+
+  add:
+    build:
+      context: ./node-add
+      dockerfile: ./Dockerfile 
+    container_name: ADD
+    image: node-add
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      CALC_SQS_QUEUE: ${CALC_SQS_QUEUE}
+    ports:
+      - "8081:8081"  
+    networks:
+      calcnet:
+        ipv4_address: 172.19.10.1
+
+  subtract:
+    build:
+      context: ./node-subtract
+      dockerfile: ./Dockerfile 
+    container_name: SUBTRACT
+    image: node-subtract
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      CALC_SQS_QUEUE: ${CALC_SQS_QUEUE}
+    ports:
+      - "8082:8082"  
+    networks:
+      calcnet:
+        ipv4_address: 172.19.10.2
+
+  multiply:
+    build:
+      context: ./node-multiply
+      dockerfile: ./Dockerfile
+    container_name: MULTIPLY
+    image: node-multiply
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      CALC_SQS_QUEUE: ${CALC_SQS_QUEUE}
+    ports:
+      - "8083:8083"  
+    networks:
+      calcnet:
+        ipv4_address: 172.19.10.3
+
+  divide:
+    build:
+      context: ./node-divide
+      dockerfile: ./Dockerfile
+    container_name: DIVIDE
+    image: node-divide
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      CALC_SQS_QUEUE: ${CALC_SQS_QUEUE}
+    ports:
+      - "8084:8084"  
+    networks:
+      calcnet:
+        ipv4_address: 172.19.10.4
+
+  power:
+    build:
+      context: ./node-power
+      dockerfile: ./Dockerfile
+    container_name: POWER
+    image: node-power
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      CALC_SQS_QUEUE: ${CALC_SQS_QUEUE}
+    ports:
+      - "8085:8085"  
+    networks:
+      calcnet:
+        ipv4_address: 172.19.10.5
+
+networks:
+  calcnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.0.0/16
