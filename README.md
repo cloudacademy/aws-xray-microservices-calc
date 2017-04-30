@@ -14,11 +14,11 @@ This project implements a simple Node.js microservices based calculator for the 
 
 AWS X-Ray helps developers analyze and debug production, distributed applications, such as those built using a microservices architecture. With X-Ray, you can understand how your application and its underlying services are performing to identify and troubleshoot the root cause of performance issues and errors. X-Ray provides an end-to-end view of requests as they travel through your application, and shows a map of your application’s underlying components. You can use X-Ray to analyze both applications in development and in production, from simple three-tier applications to complex microservices applications consisting of thousands of services.
 
-The Node.js microservices based calculator has been instrumented with the aws-xray-sdk - allowing it to propogate telemetry into the Amazon X-Ray cloud hosted service.
+The Node.js microservices based calculator has been instrumented with the Node.js `aws-xray-sdk` - allowing it to propogate telemetry into the Amazon X-Ray cloud hosted service.
 
 The sample project has been designed to run locally on a workstation using Docker containers.
 
-A `docker-compose.yml` file has been provided to orchestrate the provisioning of the microservices docker container architecture.
+A `docker-compose.yml` file has been provided to orchestrate the provisioning of the entire microservices docker container architecture.
 
 ## Prerequisites
 
