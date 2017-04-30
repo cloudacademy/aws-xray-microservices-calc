@@ -1,6 +1,6 @@
 # AWS X-Ray Microservices Calculator
 
-![Alt text](documentation/XRayDockerArch.png?raw=true "AWS X-Ray Microservices Calculator" | width=1244)
+![Alt text](documentation/XRayDockerArch.png?raw=true "AWS X-Ray Microservices Calculator" =250x250)
 
 Dockerised Microservices Calculator - demonstrating AWS X-Ray instrumentation and telemetry
 
