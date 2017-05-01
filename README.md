@@ -348,3 +348,21 @@ XRAY        | 2017-05-01T13:44:33+12:00 [Info] Successfully sent batch of 14 seg
     5. `MULTIPLY`: returns result of 1st number multiplied by 2nd number
     6. `DIVIDE`: returns result of 1st number divided by second number
     7. `POWER`: returns result of the 1st number (base) raised by the 2 number (exponent) 
+
+4. Each docker container in the solution has been designed to return a percentage of HTTP error codes, e.g. *400s* and/or *500s*. The error codes returned have no effect on the outcome of the full calculation - this still calculates normally. The error codes are intentionally returned to demonstrate how they are rendered within the AWS X-Ray Service Map and Trace views. The following code snippet highlights this:
+
+```javascript
+var responseCode = 200;
+var random = Math.random();
+
+if (random < 0.8) {
+    responseCode = 200;
+} else if (random < 0.9) {
+    responseCode = 403;
+} else {
+    responseCode = 503;
+}
+
+res.statusCode = responseCode;
+res.end();
+```
