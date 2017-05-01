@@ -93,7 +93,7 @@ AWS_ACCESS_KEY_ID=ABCD1234ABCD1234ABCD
 AWS_SECRET_ACCESS_KEY=abcd1234ABCD1234abcd1234ABCD1234abcd1234
 AWS_REGION=ap-southeast-2
 TIMEZONE=Pacific/Auckland
-CALC_SQS_QUEUE=https://sqs.ap-southeast-2.amazonaws.com/123456789012/calclog-sydJeremys-MacBook:xray-calc
+CALC_SQS_QUEUE=https://sqs.ap-southeast-2.amazonaws.com/123456789012/calclog-syd
 ```
 
 5. Run `docker-compose build` from within the project root directory
