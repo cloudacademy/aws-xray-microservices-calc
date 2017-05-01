@@ -322,3 +322,11 @@ XRAY        | 2017-05-01T13:44:33+12:00 [Info] Successfully sent batch of 14 seg
 1. The X-Ray daemon may fail on its 1st attempt to publish batch results to the AWS X-Ray service - all subsequent batch sends will work.
 
 2. The docker containers POSTFIX, ADD, SUBTRACT, MULTIPLY, DIVIDE, and POWER each publish a message to the configured SQS queue - this is done only to demostrate how AWS services can be intrumented against, the messages on the SQS queue are not consumed by any external service. The SQS queue should be purged when the sample project is torn down.
+
+3. Each docker container in the solution performs a discrete function:
+    1. `CALC`: orchestrates the full calculation - consulting each of the other containers as and when required
+    2. `POSTFIX`: converts the calculation expression from INFIX form to POSTFIX form 3. `ADD`: returns result of the 1st number added to 2nd number
+    4. `SUBTRACT`: returns result of 1st number minus 2nd number
+    5. `MULTIPLY`: returns result of 1st number multiplied by 2nd number
+    6. `DIVIDE`: returns result of 1st number divided by second number
+    7. `POWER`: returns result of the 1st number (base) raised by the 2 number (exponent) 
