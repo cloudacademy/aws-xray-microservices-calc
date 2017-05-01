@@ -14,11 +14,27 @@ This project implements a simple Node.js microservices based calculator for the 
 
 AWS X-Ray helps developers analyze and debug production, distributed applications, such as those built using a microservices architecture. With X-Ray, you can understand how your application and its underlying services are performing to identify and troubleshoot the root cause of performance issues and errors. X-Ray provides an end-to-end view of requests as they travel through your application, and shows a map of your application’s underlying components. You can use X-Ray to analyze both applications in development and in production, from simple three-tier applications to complex microservices applications consisting of thousands of services.
 
-The Node.js microservices based calculator has been instrumented with the Node.js `aws-xray-sdk` - allowing it to propogate telemetry into the Amazon X-Ray cloud hosted service.
+The Node.js microservices based calculator has been instrumented with the Node.js `aws-xray-sdk` - allowing it to propagate telemetry into the Amazon X-Ray cloud hosted service.
 
 The sample project has been designed to run locally on a workstation using Docker containers.
 
 A `docker-compose.yml` file has been provided to orchestrate the provisioning of the entire microservices docker container architecture.
+
+## Calculator
+
+The dockerised microservices calculator has been designed to evaluate simple and complex mathematical expressions. The calculator is designed to evaluate the user provided expression using the **order of operations** (or **operator precedence**) rules.
+
+### Example Expressions
+
+* `(5+3)/2`
+* `(2*(9+22/5)-((9-1)/4)^2)`
+* `(3^2+((5*5-1)/2)`
+* `(2*(9+22/5)-((9-1)/4)^2)+(3^2+((5*5-1)/2)`
+
+### Usage
+
+The calculator service can be invoked from the command line using the `curl` utility:
+`curl --data-urlencode "calcid=testid123" --data-urlencode "expression=(2*(9+22/5)-((9-1)/4)^2)+(3^2+((5*5-1)/2)" http://localhost:8080/api/calc`
 
 ## Prerequisites
 
@@ -34,7 +50,7 @@ This project has been successfully tested on:
 
 ## Installation
 
-1. Create a new IAM credential for the XRAY and SQS service accesses. Ensure that the credential has API programmatic access - this will provision an ACCESS_KEY and SECRET_ACCESS_KEY - we will add these into the `.env` configuration file (step 4 below).
+1. Create a new IAM credential for the AWS X-Ray and SQS service accesses. Ensure that the credential has API programmatic access - this will provision an ACCESS_KEY and SECRET_ACCESS_KEY - we will add these into the `.env` configuration file (step 4 below).
 2. Attach the following 2 IAM policies:
     1. `AWSXrayWriteOnlyAccess`
     2. `AmazonSQSFullAccess`
@@ -77,7 +93,7 @@ AmazonSQSFullAccess
 
 3. Create a new Amazon SQS queue. Record the SQS URL -  we will add this into the `.env` configuration file (step 4 below).
 
-4. Create a `.env` file in the project root directory. Add the following enviroment variables:
+4. Create a `.env` file in the project root directory. Add the following environment variables:
 ```javascript
 AWS_ACCESS_KEY_ID=<your access key here>
 AWS_SECRET_ACCESS_KEY=<your secret access key here>
@@ -203,7 +219,7 @@ DIVIDE      | DIVIDE service listening on port: 8084
 
 8. In another console window, fire a test calculation at it:
 
-`curl --data-urlencode "calcid=testid123" --data-urlencode "expression=(2*(9+22/5)-((9-1)/4)^2)+(3^2+((5*5-1)/2)" http://localhost:8080/api/calc'`
+`curl --data-urlencode "calcid=testid123" --data-urlencode "expression=(2*(9+22/5)-((9-1)/4)^2)+(3^2+((5*5-1)/2)" http://localhost:8080/api/calc`
 
 9. Examine the console output of the response - the answer should be `43.8`
 
@@ -319,9 +335,9 @@ XRAY        | 2017-05-01T13:44:33+12:00 [Info] Successfully sent batch of 14 seg
 
 ## Notes
 
-1. The X-Ray daemon may fail on its 1st attempt to publish batch results to the AWS X-Ray service - all subsequent batch sends will work.
+1. The X-Ray daemon may fail on its 1st attempt to publish batch results to the AWS X-Ray service - it appears to have some *warm-up* and/or initialisation to complete - after this all subsequent batch sends will work.
 
-2. The docker containers `POSTFIX`, `ADD`, `SUBTRACT`, `MULTIPLY`, `DIVIDE`, and `POWER` each publish a message to the configured SQS queue - this is done only to demostrate how AWS services can be intrumented against, the messages on the SQS queue are not consumed by any external service. The SQS queue should be purged when the sample project is torn down.
+2. The docker containers `POSTFIX`, `ADD`, `SUBTRACT`, `MULTIPLY`, `DIVIDE`, and `POWER` each publish a message to the configured SQS queue - this is done only to demonstrate how AWS services can be instrumented against, the messages on the SQS queue are not consumed by any external service. The SQS queue should be purged when the sample project is torn down.
 
 3. Each docker container in the solution performs a discrete function:
     1. `CALC`: orchestrates the full calculation - consulting each of the other containers as and when required
