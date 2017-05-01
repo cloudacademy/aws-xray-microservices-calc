@@ -99,7 +99,7 @@ CALC_SQS_QUEUE=https://sqs.ap-southeast-2.amazonaws.com/123456789012/calclog-syd
 5. Run `docker-compose build` from within the project root directory - this step will take approx 5mins to complete as it downloads the base images over the Internet.
 6. Run `docker images` - this will list all of the container images that have just been built:
 
-```javascript
+```bash
 docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED              SIZE
 node-subtract       latest              034ff79532fe        57 seconds ago       128 MB
@@ -116,7 +116,7 @@ node                alpine              7fce0a61c1d6        10 days ago         
 
 7. Run `docker-compose up` from within the project root directory:
 
-```javascript
+```bash
 Creating POSTIX
 Creating POWER
 Creating DIVIDE
@@ -209,7 +209,7 @@ DIVIDE      | DIVIDE service listening on port: 8084
 
 10. Examine the console output of the `docker-compose up` console:
 
-```javascript
+```bash
 CALC        | =====================================
 CALC        | Calculator entry point...
 CALC        | generating new calcid: rkd-QfNJZ
