@@ -209,6 +209,7 @@ DIVIDE      | DIVIDE service listening on port: 8084
 
 10. Examine the console output of the `docker-compose up` console:
 
+```javascript
 CALC        | =====================================
 CALC        | Calculator entry point...
 CALC        | generating new calcid: rkd-QfNJZ
