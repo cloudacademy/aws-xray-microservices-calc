@@ -34,6 +34,7 @@ The dockerised microservices calculator has been designed to evaluate simple and
 ### Usage
 
 The calculator service can be invoked from the command line using the `curl` utility:
+
 `curl --data-urlencode "calcid=testid123" --data-urlencode "expression=(2*(9+22/5)-((9-1)/4)^2)+(3^2+((5*5-1)/2)" http://localhost:8080/api/calc`
 
 ## Prerequisites
