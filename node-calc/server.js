@@ -5,7 +5,6 @@ var mathsolver  = require("./mathsolver.js");
 var xray        = require('aws-xray-sdk');
 var querystring = require('querystring');
 var shortid     = require('shortid');
-var aws         = require('aws-sdk');
 
 var serviceName = "CALCULATOR";
 var servicePort = 8080;
@@ -14,8 +13,6 @@ xray.middleware.setSamplingRules('sampling-rules.json');
 var http = xray.captureHTTPs(require('http'));
 
 app.use(xray.express.openSegment(serviceName));
-
-var sqs = xray.captureAWSClient(new aws.SQS());
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -79,7 +76,7 @@ router.post("/calc", function(req, res) {
             console.log(`BODY: ${chunk}`);
         });
         httpres.on('end', () => {
-            console.log('No more data in response.');
+            //console.log('No more data in response.');
 
             var postfix = data;
             console.log("postfix:" + postfix);

@@ -96,35 +96,30 @@ function calculate(calcid, postfix, i, resultStack, callback){
 
         var options = null;
         if(postfix[i] === "+") {
-            //resultStack.push(parseInt(a) + parseInt(b));
             options = {
                 hostname: '172.19.10.1',
                 port: 8081,
                 path: `/api/add?calcId=${calcid}&leftOp=${left}&rightOp=${right}`
             };
         } else if(postfix[i] === "-") {
-            //resultStack.push(parseInt(b) - parseInt(a));
             options = {
                 hostname: '172.19.10.2',
                 port: 8082,
                 path: `/api/subtract?calcId=${calcid}&leftOp=${right}&rightOp=${left}`
             };
         } else if(postfix[i] === "*") {
-            //resultStack.push(parseInt(a) * parseInt(b));
             options = {
                 hostname: '172.19.10.3',
                 port: 8083,
                 path: `/api/multiply?calcId=${calcid}&leftOp=${left}&rightOp=${right}`
             };            
         } else if(postfix[i] === "/") {
-            //resultStack.push(parseInt(b) / parseInt(a));
             options = {
                 hostname: '172.19.10.4',
                 port: 8084,
                 path: `/api/divide?calcId=${calcid}&leftOp=${right}&rightOp=${left}`
             };            
         } else if(postfix[i] === "^") {
-            //resultStack.push(Math.pow(parseInt(b), parseInt(a)));
             options = {
                 hostname: '172.19.10.5',
                 port: 8085,
@@ -135,19 +130,15 @@ function calculate(calcid, postfix, i, resultStack, callback){
         console.log(`http request host:port -> ${options.hostname}:${options.port}`)
         const httpreq = http.request(options, (res) => {
             console.log(`STATUS: ${res.statusCode}`);
-            console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+            //console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
             res.setEncoding('utf8');
             var data = '';
             res.on('data', (chunk) => {
                 data += chunk;
-                console.log(`BODY: ${chunk}`);
             });
             res.on('end', () => {
-                console.log('No more data in response.');
-
-                //var result = Number(data);
                 var result = data;
-                console.log(result);
+                console.log(`result=${result}`);
                 resultStack.push(result);
 
                 i = i + 1;
