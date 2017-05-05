@@ -22,7 +22,7 @@ A `docker-compose.yml` file has been provided to orchestrate the provisioning of
 
 ## Calculator
 
-The dockerised microservices calculator has been designed to evaluate simple and complex mathematical expressions. The calculator is designed to evaluate the user provided expression using the **order of operations** (or **operator precedence**) rules.
+The dockerised microservices calculator has been designed to evaluate simple and complex mathematical expressions. The calculator is designed to evaluate any valid user provided expression using the **order of operations** (or **operator precedence**) rules.
 
 ### Example Expressions
 
