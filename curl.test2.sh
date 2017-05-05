@@ -1,0 +1,1 @@
+curl --data-urlencode "(2*(9+22/5)-((9-1)/4)^2)+(3^2+((5*5-1)/2)" http://localhost:8080/api/calc

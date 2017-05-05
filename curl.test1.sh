@@ -1,0 +1,1 @@
+curl --data-urlencode "expression=((5+3)/2)^3" http://localhost:8080/api/calc
