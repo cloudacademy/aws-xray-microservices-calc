@@ -342,12 +342,13 @@ XRAY        | 2017-05-01T13:44:33+12:00 [Info] Successfully sent batch of 14 seg
 
 3. Each docker container in the solution performs a discrete function:
     1. `CALC`: orchestrates the full calculation - consulting each of the other containers as and when required
-    2. `POSTFIX`: converts the calculation expression from INFIX form to POSTFIX form
-    3. `ADD`: returns result of the 1st number added to 2nd number
-    4. `SUBTRACT`: returns result of 1st number minus 2nd number
-    5. `MULTIPLY`: returns result of 1st number multiplied by 2nd number
-    6. `DIVIDE`: returns result of 1st number divided by second number
-    7. `POWER`: returns result of the 1st number (base) raised by the 2 number (exponent) 
+    2. `XRAY`: hosts the AWS X-Ray Daemon - this listens for incoming `UDP` traffic on port `2000`. All of the other docker containers are configured to send their X-Ray data to this container - it is then periodically batched up and delivered over `HTTPS` to the AWS X-Ray service via the Internet
+    3. `POSTFIX`: converts the calculation expression from INFIX form to POSTFIX form
+    4. `ADD`: returns result of the 1st number added to 2nd number
+    5. `SUBTRACT`: returns result of 1st number minus 2nd number
+    6. `MULTIPLY`: returns result of 1st number multiplied by 2nd number
+    7. `DIVIDE`: returns result of 1st number divided by second number
+    8. `POWER`: returns result of the 1st number (base) raised by the 2 number (exponent) 
 
 4. Each docker container in the solution has been designed to return a percentage of HTTP error codes, e.g. *400s* and/or *500s*. The error codes returned have no effect on the outcome of the full calculation - this still calculates normally. The error codes are intentionally returned to demonstrate how they are rendered within the AWS X-Ray Service Map and Trace views. The following code snippet highlights this:
 
