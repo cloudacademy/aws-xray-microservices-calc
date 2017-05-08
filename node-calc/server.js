@@ -82,7 +82,7 @@ router.post("/calc", function(req, res) {
             console.log("postfix:" + postfix);
         
             mathsolver.solvePostfix(calcid, postfix, function(result){
-                console.log("result=" + result);
+                console.log("CALC RESULT=" + result);
                 res.write(`${infix}=${result}\n`);
                                 
                 seg.addMetadata("infix", infix);
@@ -126,12 +126,12 @@ app.use(xray.express.closeSegment());
 app.listen(port);
 console.log(`${serviceName} service listening on port: ` + port);
 
-var exampleExpression1 = "curl --data-urlencode \"expression=(5+3)/2\" http://localhost:8080/api/calc"
-var exampleExpression2 = "curl --data-urlencode \"expression=((5+3)/2)^3\" http://localhost:8080/api/calc"
-var exampleExpression3 = "curl --data-urlencode \"expression=3^2+((5*5-1)/2)\" http://localhost:8080/api/calc"
-var exampleExpression4 = "curl --data-urlencode \"expression=3^3+((5*5)-1)/2\" http://localhost:8080/api/calc"
-var exampleExpression5 = "curl --data-urlencode \"expression=(2*(9+22/5)-((9-1)/4)^2)\" http://localhost:8080/api/calc"
-var exampleExpression6 = "curl --data-urlencode \"expression=(2*(9+22/5)-((9-1)/4)^2)+(3^2+((5*5-1)/2))\" http://localhost:8080/api/calc"
+var exampleExpression1 = "curl --data-urlencode \"calcid=1234\" --data-urlencode \"expression=(5+3)/2\" http://localhost:8080/api/calc"
+var exampleExpression2 = "curl --data-urlencode \"calcid=1234\" --data-urlencode \"expression=((5+3)/2)^3\" http://localhost:8080/api/calc"
+var exampleExpression3 = "curl --data-urlencode \"calcid=1234\" --data-urlencode \"expression=3^2+((5*5-1)/2)\" http://localhost:8080/api/calc"
+var exampleExpression4 = "curl --data-urlencode \"calcid=1234\" --data-urlencode \"expression=3^3+((5*5)-1)/2\" http://localhost:8080/api/calc"
+var exampleExpression5 = "curl --data-urlencode \"calcid=1234\" --data-urlencode \"expression=(2*(9+22/5)-((9-1)/4)^2)\" http://localhost:8080/api/calc"
+var exampleExpression6 = "curl --data-urlencode \"calcid=1234\" --data-urlencode \"expression=(2*(9+22/5)-((9-1)/4)^2)+(3^2+((5*5-1)/2))\" http://localhost:8080/api/calc"
 
 console.log("********************************************");
 console.log("********************************************");
@@ -142,6 +142,7 @@ console.log(`${exampleExpression3}`);
 console.log(`${exampleExpression4}`);
 console.log(`${exampleExpression5}`);
 console.log(`${exampleExpression6}`);
+console.log("note: the optional calcid param will be added as an annotation to the xray trace")
 console.log("********************************************");
 console.log("********************************************");
 

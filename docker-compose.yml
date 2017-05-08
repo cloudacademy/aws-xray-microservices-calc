@@ -23,6 +23,14 @@ services:
     build:
       context: ./node-calc
       dockerfile: ./Dockerfile
+    depends_on:
+      - add
+      - subtract
+      - multiply
+      - divide
+      - power
+      - postfix
+      - xray
     container_name: CALC
     image: node-calc
     environment:
