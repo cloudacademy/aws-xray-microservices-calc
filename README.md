@@ -99,7 +99,7 @@ AmazonSQSFullAccess
 AWS_ACCESS_KEY_ID=<your access key here>
 AWS_SECRET_ACCESS_KEY=<your secret access key here>
 AWS_REGION=<aws region>
-TIMEZONE=<time zone that the X-Ray daemon runs in>
+XRAY_CONTAINER_TIMEZONE=<time zone that the X-Ray daemon runs in>
 CALC_SQS_QUEUE=<your SQS URL>
 ```
 
@@ -109,7 +109,7 @@ example `.env` file:
 AWS_ACCESS_KEY_ID=ABCD1234ABCD1234ABCD
 AWS_SECRET_ACCESS_KEY=abcd1234ABCD1234abcd1234ABCD1234abcd1234
 AWS_REGION=ap-southeast-2
-TIMEZONE=Pacific/Auckland
+XRAY_CONTAINER_TIMEZONE=Pacific/Auckland
 CALC_SQS_QUEUE=https://sqs.ap-southeast-2.amazonaws.com/123456789012/calclog-syd
 ```
 

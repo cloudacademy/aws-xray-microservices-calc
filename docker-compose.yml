@@ -5,7 +5,7 @@ services:
       context: ./xray
       dockerfile: ./Dockerfile
       args:
-        - TIMEZONE=${TIMEZONE}    
+        - TIMEZONE=${XRAY_CONTAINER_TIMEZONE}    
     container_name: XRAY
     image: xray-daemon
     command: --local-mode
