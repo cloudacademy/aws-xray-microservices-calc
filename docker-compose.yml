@@ -5,7 +5,7 @@ services:
       context: ./xray
       dockerfile: ./Dockerfile
       args:
-        - TIMEZONE=${XRAY_CONTAINER_TIMEZONE}    
+        - XRAY_CONTAINER_TIMEZONE=${XRAY_CONTAINER_TIMEZONE}    
     container_name: XRAY
     image: xray-daemon
     command: --local-mode
@@ -29,7 +29,7 @@ services:
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_REGION: ${AWS_REGION}
-      CALC_SQS_QUEUE: ${CALC_SQS_QUEUE}    
+      CALC_SQS_QUEUE_URL: ${CALC_SQS_QUEUE_URL}    
     ports:
       - "8080:8080"
     networks:
@@ -46,7 +46,7 @@ services:
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_REGION: ${AWS_REGION}
-      CALC_SQS_QUEUE: ${CALC_SQS_QUEUE}
+      CALC_SQS_QUEUE_URL: ${CALC_SQS_QUEUE_URL}
     ports:
       - "9090:9090"  
     networks:
@@ -63,7 +63,7 @@ services:
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_REGION: ${AWS_REGION}
-      CALC_SQS_QUEUE: ${CALC_SQS_QUEUE}
+      CALC_SQS_QUEUE_URL: ${CALC_SQS_QUEUE_URL}
     ports:
       - "8081:8081"  
     networks:
@@ -80,7 +80,7 @@ services:
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_REGION: ${AWS_REGION}
-      CALC_SQS_QUEUE: ${CALC_SQS_QUEUE}
+      CALC_SQS_QUEUE_URL: ${CALC_SQS_QUEUE_URL}
     ports:
       - "8082:8082"  
     networks:
@@ -97,7 +97,7 @@ services:
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_REGION: ${AWS_REGION}
-      CALC_SQS_QUEUE: ${CALC_SQS_QUEUE}
+      CALC_SQS_QUEUE_URL: ${CALC_SQS_QUEUE_URL}
     ports:
       - "8083:8083"  
     networks:
@@ -114,7 +114,7 @@ services:
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_REGION: ${AWS_REGION}
-      CALC_SQS_QUEUE: ${CALC_SQS_QUEUE}
+      CALC_SQS_QUEUE_URL: ${CALC_SQS_QUEUE_URL}
     ports:
       - "8084:8084"  
     networks:
@@ -131,7 +131,7 @@ services:
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_REGION: ${AWS_REGION}
-      CALC_SQS_QUEUE: ${CALC_SQS_QUEUE}
+      CALC_SQS_QUEUE_URL: ${CALC_SQS_QUEUE_URL}
     ports:
       - "8085:8085"  
     networks:

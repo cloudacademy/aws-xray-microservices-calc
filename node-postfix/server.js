@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 
 var port = process.env.PORT || servicePort;
 
-var calcSQSQueue = process.env.CALC_SQS_QUEUE
+var calcSQSQueue = process.env.CALC_SQS_QUEUE_URL
 
 // ROUTES FOR OUR API
 // =============================================================================

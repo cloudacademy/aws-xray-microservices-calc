@@ -1,5 +1,5 @@
 FROM debian:stable-slim
-ARG TIMEZONE
+ARG XRAY_CONTAINER_TIMEZONE
 ADD https://s3.amazonaws.com/aws-xray-assets.us-east-1/xray-daemon/aws-xray-daemon-1.x.deb /tmp
 RUN cd /tmp/ && \
 		apt-get update && \
@@ -10,7 +10,7 @@ RUN cd /tmp/ && \
 ENV DEBCONF_NONINTERACTIVE_SEEN=true 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN echo "${TIMEZONE}" > /etc/timezone
+RUN echo "${XRAY_CONTAINER_TIMEZONE}" > /etc/timezone
 RUN dpkg-reconfigure tzdata
 
 EXPOSE 2000/udp
