@@ -125,3 +125,11 @@ app.use(xray.express.closeSegment());
 // =============================================================================
 app.listen(port);
 console.log(`${serviceName} service listening on port: ` + port);
+
+var exampleExpression = "curl --data-urlencode \"expression=3^3+((5*5)-1)/2\" http://localhost:8080/api/calc"
+console.log("********************************************");
+console.log("********************************************");
+console.log("example calculator test command:");
+console.log(`${exampleExpression}`);
+console.log("********************************************");
+console.log("********************************************");
