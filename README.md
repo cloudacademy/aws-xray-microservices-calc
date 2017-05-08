@@ -24,12 +24,14 @@ A `docker-compose.yml` file has been provided to orchestrate the provisioning of
 
 The dockerised microservices calculator has been designed to evaluate simple and complex mathematical expressions. The calculator is designed to evaluate any valid user provided expression using the **order of operations** (or **operator precedence**) rules.
 
-### Example Expressions
+### Sample Expressions
 
 * `(5+3)/2`
+* `((5+3)/2)^3`
+* `3^2+((5*5-1)/2)`
+* `3^3+((5*5)-1)/2`
 * `(2*(9+22/5)-((9-1)/4)^2)`
-* `(3^2+((5*5-1)/2)`
-* `(2*(9+22/5)-((9-1)/4)^2)+(3^2+((5*5-1)/2)`
+* `(2*(9+22/5)-((9-1)/4)^2)+(3^2+((5*5-1)/2))`
 
 ### Usage
 

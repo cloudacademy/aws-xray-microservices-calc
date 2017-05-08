@@ -83,7 +83,7 @@ router.post("/calc", function(req, res) {
         
             mathsolver.solvePostfix(calcid, postfix, function(result){
                 console.log("result=" + result);
-                res.write(result);
+                res.write(`${infix}=${result}\n`);
                                 
                 seg.addMetadata("infix", infix);
                 seg.addMetadata("postfix", postfix);
@@ -126,10 +126,31 @@ app.use(xray.express.closeSegment());
 app.listen(port);
 console.log(`${serviceName} service listening on port: ` + port);
 
-var exampleExpression = "curl --data-urlencode \"expression=3^3+((5*5)-1)/2\" http://localhost:8080/api/calc"
+var exampleExpression1 = "curl --data-urlencode \"expression=(5+3)/2\" http://localhost:8080/api/calc"
+var exampleExpression2 = "curl --data-urlencode \"expression=((5+3)/2)^3\" http://localhost:8080/api/calc"
+var exampleExpression3 = "curl --data-urlencode \"expression=3^2+((5*5-1)/2)\" http://localhost:8080/api/calc"
+var exampleExpression4 = "curl --data-urlencode \"expression=3^3+((5*5)-1)/2\" http://localhost:8080/api/calc"
+var exampleExpression5 = "curl --data-urlencode \"expression=(2*(9+22/5)-((9-1)/4)^2)\" http://localhost:8080/api/calc"
+var exampleExpression6 = "curl --data-urlencode \"expression=(2*(9+22/5)-((9-1)/4)^2)+(3^2+((5*5-1)/2))\" http://localhost:8080/api/calc"
+
 console.log("********************************************");
 console.log("********************************************");
-console.log("example calculator test command:");
-console.log(`${exampleExpression}`);
+console.log("sample calculator test commands:");
+console.log(`${exampleExpression1}`);
+console.log(`${exampleExpression2}`);
+console.log(`${exampleExpression3}`);
+console.log(`${exampleExpression4}`);
+console.log(`${exampleExpression5}`);
+console.log(`${exampleExpression6}`);
 console.log("********************************************");
 console.log("********************************************");
+
+
+
+
+
+
+
+
+
+
