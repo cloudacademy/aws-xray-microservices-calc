@@ -48,11 +48,11 @@ Note: The optional `calcid` param will be promoted to an *Annotation* on the cap
 
 `service("CALCULATOR") { fault = true } AND annotation.calcid = "1234"`
 
-###AWS X-Ray Traces Grouped by Annotation
+### AWS X-Ray Traces Grouped by Annotation
 
 ![Alt text](documentation/FilterExpression1.png?raw=true "AWS X-Ray Traces Grouped by Annotation")
 
-###AWS X-Ray Trace Annotation Based Filter Expression
+### AWS X-Ray Trace Annotation Based Filter Expression
 
 ![Alt text](documentation/FilterExpression2.png?raw=true "AWS X-Ray Trace Annotation Based Filter Expression")
 
