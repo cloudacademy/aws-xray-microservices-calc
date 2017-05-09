@@ -251,9 +251,9 @@ CALC        | ********************************************
 
 8. In another console window, fire a test calculation at it:
 
-`curl --data-urlencode "calcid=testid123" --data-urlencode "expression=(2*(9+22/5)-((9-1)/4)^2)+(3^2+((5*5-1)/2)" http://localhost:8080/api/calc`
+`curl --data-urlencode "calcid=1234" --data-urlencode "expression=((5+3)/2)^3" http://localhost:8080/api/calc`
 
-9. Examine the console output of the response - the answer should be `43.8`
+9. Examine the console output - the response should be `((5+3)/2)^3=64`
 
 10. Examine the console output of the `docker-compose up` console:
 
