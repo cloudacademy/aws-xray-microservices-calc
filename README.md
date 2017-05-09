@@ -48,6 +48,14 @@ Note: The optional `calcid` param will be promoted to an *Annotation* on the cap
 
 `service("CALCULATOR") { fault = true } AND annotation.calcid = "1234"`
 
+###AWS X-Ray Traces Grouped by Annotation
+
+![Alt text](documentation/FilterExpression1.png?raw=true "AWS X-Ray Traces Grouped by Annotation")
+
+###AWS X-Ray Trace Annotation Based Filter Expression
+
+![Alt text](documentation/FilterExpression2.png?raw=true "AWS X-Ray Trace Annotation Based Filter Expression")
+
 ## Prerequisites
 
 You will need to have a Docker runtime installed locally. This project uses both `docker` and `docker-compose` utilities. There are generally 2 approaches to installing a workstation Docker runtime:
