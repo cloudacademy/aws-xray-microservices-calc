@@ -2,6 +2,7 @@ var express     = require('express');
 var app         = express();
 var bodyParser  = require('body-parser');
 var mathsolver  = require("./mathsolver.js");
+var calcmetrics = require("./calcmetrics.js");
 var xray        = require('aws-xray-sdk');
 var querystring = require('querystring');
 var shortid     = require('shortid');
@@ -81,10 +82,24 @@ router.post("/calc", function(req, res) {
             var postfix = data;
             console.log("postfix:" + postfix);
         
-            mathsolver.solvePostfix(calcid, postfix, function(result){
+            var stats = new calcmetrics();
+            mathsolver.solvePostfix(stats, calcid, postfix, function(result){
                 console.log("CALC RESULT=" + result);
-                res.write(`${infix}=${result}\n`);
-                                
+                console.log(`add count ${stats.additionCount}`);
+                console.log(`subtract count ${stats.subtractCount}`);
+                console.log(`multiply count ${stats.multiplyCount}`);
+                console.log(`divide count ${stats.divideCount}`);
+                console.log(`power count ${stats.powerCount}`);
+
+                res.write(`infix: ${infix}\n`);
+                res.write(`postfix: ${postfix}\n`);                
+                res.write(`add call count: ${stats.additionCount}\n`);
+                res.write(`subtract call count: ${stats.subtractCount}\n`);
+                res.write(`multiply call count: ${stats.multiplyCount}\n`);
+                res.write(`divide call count: ${stats.divideCount}\n`);
+                res.write(`power call count: ${stats.powerCount}\n`);                
+                res.write(`ANSWER = ${result}\n`);
+                                                    
                 seg.addMetadata("infix", infix);
                 seg.addMetadata("postfix", postfix);
                 seg.addMetadata("result", result);
@@ -92,11 +107,15 @@ router.post("/calc", function(req, res) {
                 var responseCode = 200;
                 var random = Math.random();
 
+                //randomize response code
                 if (random < 0.8) {
+                    //GREEN
                     responseCode = 200;
                 } else if (random < 0.9) {
+                    //ORANGE
                     responseCode = 403;
                 } else {
+                    //RED
                     responseCode = 503;
                 }
 

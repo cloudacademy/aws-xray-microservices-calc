@@ -50,13 +50,18 @@ router.get("/subtract", function(req, res) {
     var responseCode = 200;
     var random = Math.random();
 
+    //randomize response code
     if (random < 0.8) {
+        //GREEN
         responseCode = 200;
     } else if (random < 0.9) {
+        //ORANGE
         responseCode = 403;
     } else {
+        //RED
         responseCode = 503;
     }
+
 
     res.statusCode = responseCode;    
     res.end();

@@ -72,21 +72,21 @@ module.exports = {
         return outputQueue;
     },
 
-    solvePostfix: function(calcid, postfix, callback) {
+    solvePostfix: function(stats, calcid, postfix, callback) {
         var resultStack = [];
         postfix = postfix.split(" ");
         var i = 0;
-        calculate(calcid, postfix, i, resultStack, function(result){
+        calculate(stats, calcid, postfix, i, resultStack, function(result){
             callback(result);
         });
     }
 };
 
-function calculate(calcid, postfix, i, resultStack, callback){    
+function calculate(stats, calcid, postfix, i, resultStack, callback){    
     if(postfix[i].isNumeric()) {
         resultStack.push(postfix[i]);
         i = i + 1;
-        calculate(calcid, postfix, i, resultStack, callback);
+        calculate(stats, calcid, postfix, i, resultStack, callback);
     } else {
         var a = resultStack.pop();
         var b = resultStack.pop();
@@ -96,30 +96,35 @@ function calculate(calcid, postfix, i, resultStack, callback){
 
         var options = null;
         if(postfix[i] === "+") {
+            stats.additionCount++;
             options = {
                 hostname: '172.19.10.1',
                 port: 8081,
                 path: `/api/add?calcId=${calcid}&leftOp=${left}&rightOp=${right}`
             };
         } else if(postfix[i] === "-") {
+            stats.subtractCount++;
             options = {
                 hostname: '172.19.10.2',
                 port: 8082,
                 path: `/api/subtract?calcId=${calcid}&leftOp=${right}&rightOp=${left}`
             };
         } else if(postfix[i] === "*") {
+            stats.multiplyCount++;
             options = {
                 hostname: '172.19.10.3',
                 port: 8083,
                 path: `/api/multiply?calcId=${calcid}&leftOp=${left}&rightOp=${right}`
             };            
         } else if(postfix[i] === "/") {
+            stats.divideCount++;
             options = {
                 hostname: '172.19.10.4',
                 port: 8084,
                 path: `/api/divide?calcId=${calcid}&leftOp=${right}&rightOp=${left}`
             };            
         } else if(postfix[i] === "^") {
+            stats.powerCount++;
             options = {
                 hostname: '172.19.10.5',
                 port: 8085,
@@ -143,7 +148,7 @@ function calculate(calcid, postfix, i, resultStack, callback){
 
                 i = i + 1;
                 if(i < postfix.length){
-                    calculate(calcid, postfix, i, resultStack, callback);
+                    calculate(stats, calcid, postfix, i, resultStack, callback);
                 }            
                 else{
                     if(resultStack.length > 1) {
