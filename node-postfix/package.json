@@ -2,11 +2,10 @@
   "name": "node-api",
   "main": "server.js",
   "dependencies": {
-    "aws-sdk": "^2.45.0",    
-    "aws-xray-sdk": "^1.0.6-beta",
-    "body-parser": "~1.0.1",
-    "express": "~4.0.0",
-    "mongoose": "~3.6.13",
+    "aws-sdk": "^2.696.0",
+    "aws-xray-sdk": "^3.1.0",
+    "body-parser": "^1.19.0",
+    "express": "~4.17.1",
     "request": "^2.81.0",
     "request-promise": "^4.2.0",
     "stack-lifo": "^0.1.5"

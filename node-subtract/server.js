@@ -68,6 +68,8 @@ router.get("/subtract", function(req, res) {
 
     var params = {
         MessageGroupId: calcid,
+        MessageDeduplicationId: calcid,
+
         MessageAttributes: {
             "LeftOperand": {
                 DataType: "String",
@@ -88,11 +90,16 @@ router.get("/subtract", function(req, res) {
 
     sqs.sendMessage(params, function(err, data) {
         if (err) {
-            console.log(`sqs error for ${serviceName} service`, data.MessageId);            
+            if (data) {
+                console.log(`sqs error for ${serviceName} service`, data.MessageId);
+            }
+            else {
+                console.log(`sqs error for ${serviceName} service`, err);
+            }
         } else {
-            console.log(`sqs success for ${serviceName} service`, data.MessageId);            
+            console.log(`sqs success for ${serviceName} service`, data.MessageId);
         }
-    });    
+    });
 });
 
 // REGISTER OUR ROUTES -------------------------------

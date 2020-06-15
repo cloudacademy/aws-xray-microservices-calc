@@ -1,4 +1,5 @@
 # AWS X-Ray Microservices Calculator
+Updated: June 2020 - Refreshed entire codebase. Retested to confirm it works with the latest updates available within both the X-Ray service, AWS SDK, and SQS service.
 
 ![Alt text](documentation/ServiceMap.png?raw=true "Amazon X-Ray Console Service Map")
 
@@ -85,7 +86,10 @@ AWSXrayWriteOnlyAccess
             "Effect": "Allow",
             "Action": [
                 "xray:PutTraceSegments",
-                "xray:PutTelemetryRecords"
+                "xray:PutTelemetryRecords",
+                "xray:GetSamplingRules",
+                "xray:GetSamplingTargets",
+                "xray:GetSamplingStatisticSummaries"
             ],
             "Resource": [
                 "*"
@@ -111,7 +115,9 @@ AmazonSQSFullAccess
 }
 ```
 
-3. Create a new Amazon SQS queue. Record the SQS URL -  we will add this into the `.env` configuration file (step 4 below).
+3. Create a new Amazon **FIFO** SQS queue. Record the SQS URL -  we will add this into the `.env` configuration file (step 4 below).
+
+**Note**: The SQS queue must be of type **FIFO**.
 
 4. Create a `.env` file in the project root directory. Add the following environment variables:
 ```javascript
@@ -129,7 +135,7 @@ AWS_ACCESS_KEY_ID=ABCD1234ABCD1234ABCD
 AWS_SECRET_ACCESS_KEY=abcd1234ABCD1234abcd1234ABCD1234abcd1234
 AWS_REGION=ap-southeast-2
 XRAY_CONTAINER_TIMEZONE=Pacific/Auckland
-CALC_SQS_QUEUE_URL=https://sqs.ap-southeast-2.amazonaws.com/123456789012/calclog-syd
+CALC_SQS_QUEUE_URL=https://sqs.ap-southeast-2.amazonaws.com/123456789012/calc.fifo
 ```
 
 5. Run `docker-compose build` from within the project root directory - this step will take approx 5mins to complete as it downloads the base images over the Internet.
@@ -153,87 +159,55 @@ node                alpine              7fce0a61c1d6        10 days ago         
 7. Run `docker-compose up` from within the project root directory:
 
 ```bash
-Creating SUBTRACT
-Creating DIVIDE
-Creating MULTIPLY
-Creating XRAY
-Creating POSTIX
-Creating POWER
-Creating ADD
-Creating CALC
-Attaching to DIVIDE, SUBTRACT, POSTIX, MULTIPLY, ADD, POWER, XRAY, CALC
-SUBTRACT    | npm info it worked if it ends with ok
-SUBTRACT    | npm info using npm@4.2.0
-SUBTRACT    | npm info using node@v7.10.0
-SUBTRACT    | npm info lifecycle node-api@~prestart: node-api@
-SUBTRACT    | npm info lifecycle node-api@~start: node-api@
-SUBTRACT    | 
-SUBTRACT    | > node-api@ start /usr/src/app
-SUBTRACT    | > node server.js
-SUBTRACT    | 
-SUBTRACT    | SUBTRACT service listening on port: 8082
-DIVIDE      | npm info it worked if it ends with ok
-XRAY        | 2017-05-09T08:44:53+12:00 [Info] Initializing AWS X-Ray daemon 1.0.1
-XRAY        | 2017-05-09T08:44:53+12:00 [Info] Using memory limit of 99 MB
-XRAY        | 2017-05-09T08:44:53+12:00 [Info] 633 segment buffers allocated
-POWER       | npm info it worked if it ends with ok
-POSTIX      | npm info it worked if it ends with ok
-MULTIPLY    | npm info it worked if it ends with ok
-MULTIPLY    | npm info using npm@4.2.0
-POWER       | npm info using npm@4.2.0
-ADD         | npm info it worked if it ends with ok
-MULTIPLY    | npm info using node@v7.10.0
-DIVIDE      | npm info using npm@4.2.0
-POSTIX      | npm info using npm@4.2.0
-POWER       | npm info using node@v7.10.0
-POWER       | npm info lifecycle node-api@~prestart: node-api@
-POWER       | npm info lifecycle node-api@~start: node-api@
-MULTIPLY    | npm info lifecycle node-api@~prestart: node-api@
-ADD         | npm info using npm@4.2.0
-POSTIX      | npm info using node@v7.10.0
-POSTIX      | npm info lifecycle node-api@~prestart: node-api@
-POWER       | 
-MULTIPLY    | npm info lifecycle node-api@~start: node-api@
-MULTIPLY    | 
-MULTIPLY    | > node-api@ start /usr/src/app
-MULTIPLY    | > node server.js
-POSTIX      | npm info lifecycle node-api@~start: node-api@
-POWER       | > node-api@ start /usr/src/app
-POWER       | > node server.js
-POWER       | 
-MULTIPLY    | 
-ADD         | npm info using node@v7.10.0
-DIVIDE      | npm info using node@v7.10.0
-DIVIDE      | npm info lifecycle node-api@~prestart: node-api@
-DIVIDE      | npm info lifecycle node-api@~start: node-api@
-DIVIDE      | 
-DIVIDE      | > node-api@ start /usr/src/app
-DIVIDE      | > node server.js
-DIVIDE      | 
-POSTIX      | 
-DIVIDE      | DIVIDE service listening on port: 8084
-POSTIX      | > node-api@ start /usr/src/app
-POSTIX      | > node server.js
-POSTIX      | 
-ADD         | npm info lifecycle node-api@~prestart: node-api@
-ADD         | npm info lifecycle node-api@~start: node-api@
-ADD         | 
+Creating XRAY     ... done
+Creating SUBTRACT ... done
+Creating DIVIDE   ... done
+Creating POSTIX   ... done
+Creating ADD      ... done
+Creating POWER    ... done
+Creating MULTIPLY ... done
+Creating CALC     ... done
+Attaching to DIVIDE, MULTIPLY, ADD, POWER, SUBTRACT, XRAY, POSTIX, CALC
+ADD         |
 ADD         | > node-api@ start /usr/src/app
 ADD         | > node server.js
-ADD         | 
-ADD         | ADD service listening on port: 8081
-MULTIPLY    | MULTIPLY service listening on port: 8083
-POWER       | POWER service listening on port: 8085
-CALC        | npm info it worked if it ends with ok
-CALC        | npm info using npm@4.2.0
-CALC        | npm info using node@v7.10.0
+ADD         |
+DIVIDE      |
+DIVIDE      | > node-api@ start /usr/src/app
+DIVIDE      | > node server.js
+DIVIDE      |
+MULTIPLY    |
+MULTIPLY    | > node-api@ start /usr/src/app
+MULTIPLY    | > node server.js
+MULTIPLY    |
+SUBTRACT    |
+SUBTRACT    | > node-api@ start /usr/src/app
+SUBTRACT    | > node server.js
+SUBTRACT    |
+POWER       |
+POWER       | > node-api@ start /usr/src/app
+POWER       | > node server.js
+POWER       |
+XRAY        | 2020-06-15T03:15:10Z [Info] Initializing AWS X-Ray daemon 3.2.0
+XRAY        | 2020-06-15T03:15:10Z [Info] Using buffer memory limit of 19 MB
+XRAY        | 2020-06-15T03:15:10Z [Info] 304 segment buffers allocated
+XRAY        | 2020-06-15T03:15:10Z [Info] Using region: ap-southeast-2
+XRAY        | 2020-06-15T03:15:10Z [Info] HTTP Proxy server using X-Ray Endpoint : https://xray.ap-southeast-2.amazonaws.com
+XRAY        | 2020-06-15T03:15:10Z [Info] Starting proxy http server on 127.0.0.1:2000
+POSTIX      |
+POSTIX      | > node-api@ start /usr/src/app
+POSTIX      | > node server.js
+POSTIX      |
 POSTIX      | POSTFIX service listening on port: 9090
-CALC        | npm info lifecycle node-api@~prestart: node-api@
-CALC        | npm info lifecycle node-api@~start: node-api@
-CALC        | 
+CALC        |
 CALC        | > node-api@ start /usr/src/app
 CALC        | > node server.js
-CALC        | 
+CALC        |
+MULTIPLY    | MULTIPLY service listening on port: 8083
+DIVIDE      | DIVIDE service listening on port: 8084
+POWER       | POWER service listening on port: 8085
+SUBTRACT    | SUBTRACT service listening on port: 8082
+ADD         | ADD service listening on port: 8081
 CALC        | CALCULATOR service listening on port: 8080
 CALC        | ********************************************
 CALC        | ********************************************
@@ -264,7 +238,7 @@ CALC        | calcid: 1234, infix: ((5+3)/2)^3
 POSTIX      | POSTFIX->calcid: 1234, infix: ((5+3)/2)^3
 POSTIX      | POSTFIX->calcid: 1234, postfix: 5 3 + 2 / 3 ^
 CALC        | STATUS: 200
-CALC        | HEADERS: {"x-powered-by":"Express","date":"Mon, 08 May 2017 20:52:20 GMT","connection":"close","transfer-encoding":"chunked"}
+CALC        | HEADERS: {"x-powered-by":"Express","date":"Mon, 15 Jun 2020 03:16:49 GMT","connection":"close","transfer-encoding":"chunked"}
 CALC        | BODY: 5 3 + 2 / 3 ^
 CALC        | postfix:5 3 + 2 / 3 ^
 CALC        | http request host:port -> 172.19.10.1:8081
@@ -278,16 +252,21 @@ DIVIDE      | 8/2=4
 CALC        | STATUS: 200
 CALC        | result=4
 CALC        | http request host:port -> 172.19.10.5:8085
+POWER       | powering...
+POWER       | 4^3=64
 CALC        | STATUS: 200
 CALC        | result=64
 CALC        | CALC RESULT=64
-POWER       | powering...
-POWER       | 4^3=64
-POSTIX      | sqs success for POSTFIX service ba99d4ad-f14b-4c73-89d5-8a6e36a102aa
-ADD         | sqs success for ADD service de12d435-df9a-4137-8155-45f045756ed4
-DIVIDE      | sqs success for DIVIDE service ad13432a-78db-4617-b72e-83a888a4f335
-POWER       | sqs success for POWER service 57e5ba5c-d46c-46a2-a680-39bcfcdb8244
-XRAY        | 2017-05-09T08:52:21+12:00 [Info] Successfully sent batch of 5 segments (0.219 seconds)
+CALC        | add count 1
+CALC        | subtract count 0
+CALC        | multiply count 0
+CALC        | divide count 1
+CALC        | power count 1
+POSTIX      | sqs success for POSTFIX service 72ba0156-06b0-4912-ae6f-154450c571bd
+ADD         | sqs success for ADD service 72ba0156-06b0-4912-ae6f-154450c571bd
+DIVIDE      | sqs success for DIVIDE service 72ba0156-06b0-4912-ae6f-154450c571bd
+POWER       | sqs success for POWER service 72ba0156-06b0-4912-ae6f-154450c571bd
+XRAY        | 2020-06-15T03:16:50Z [Info] Successfully sent batch of 5 segments (0.496 seconds)
 ```
 
 11. Login into the AWS X-Ray console
@@ -307,7 +286,7 @@ XRAY        | 2017-05-09T08:52:21+12:00 [Info] Successfully sent batch of 5 segm
 
 1. The X-Ray daemon may fail on its 1st attempt to publish batch results to the AWS X-Ray service - it appears to have some *warm-up* and/or initialisation to complete - after this all subsequent batch sends will work.
 
-2. The docker containers `POSTFIX`, `ADD`, `SUBTRACT`, `MULTIPLY`, `DIVIDE`, and `POWER` each publish a message to the configured SQS queue - this is done only to demonstrate how AWS services can be instrumented against, the messages on the SQS queue are not consumed by any external service. The SQS queue should be purged when the sample project is torn down.
+2. The docker containers `POSTFIX`, `ADD`, `SUBTRACT`, `MULTIPLY`, `DIVIDE`, and `POWER` each publish a message to the configured SQS **FIFO** queue - this is done only to demonstrate how AWS services can be instrumented against, the messages on the SQS queue are not consumed by any external service. The SQS queue should be purged when the sample project is torn down.
 
 3. Each docker container in the solution performs a discrete function:
     1. `CALC`: orchestrates the full calculation - consulting each of the other containers as and when required

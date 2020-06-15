@@ -2,9 +2,9 @@
   "name": "node-api",
   "main": "server.js",
   "dependencies": {
-    "aws-sdk": "^2.45.0",    
-    "aws-xray-sdk": "^1.0.6-beta",
-    "body-parser": "~1.0.1",
-    "express": "~4.0.0"
+    "aws-sdk": "^2.696.0",
+    "aws-xray-sdk": "^3.1.0",
+    "body-parser": "^1.19.0",
+    "express": "~4.17.1"
   }
 }

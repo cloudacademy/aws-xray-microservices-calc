@@ -37,7 +37,7 @@ services:
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_REGION: ${AWS_REGION}
-      CALC_SQS_QUEUE_URL: ${CALC_SQS_QUEUE_URL}    
+      CALC_SQS_QUEUE_URL: ${CALC_SQS_QUEUE_URL}
     ports:
       - "8080:8080"
     networks:
