@@ -118,7 +118,7 @@ AmazonSQSFullAccess
 **Note**: The SQS queue must be of type **FIFO**.
 
 4. Create a `.env` file in the project root directory. Add the following environment variables:
-```javascript
+```bash
 AWS_ACCESS_KEY_ID=<your access key here>
 AWS_SECRET_ACCESS_KEY=<your secret access key here>
 AWS_REGION=<aws region>
@@ -128,7 +128,7 @@ CALC_SQS_QUEUE_URL=<your SQS URL>
 
 example `.env` file:
 
-```javascript
+```bash
 AWS_ACCESS_KEY_ID=ABCD1234ABCD1234ABCD
 AWS_SECRET_ACCESS_KEY=abcd1234ABCD1234abcd1234ABCD1234abcd1234
 AWS_REGION=ap-southeast-2
